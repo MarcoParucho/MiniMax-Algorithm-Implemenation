@@ -31,9 +31,25 @@ def place():
             print("Error. Position is already filled.")
     else:
         print("Error. Pick a choice between 1 and 9!")
+
+#this function will be in charge of checking if any player win
+def checkWin():
+    #horizontal
+    if board[0] == 'X' and board[1] == 'X' and board[2] == 'X':
+        print("Player X wins the game!")
+    if board[3] == 'X' and board[4] == 'X' and board[5] == 'X':
+        print("Player X wins the game!")
+    if board[6] == 'X' and board[7] == 'X' and board[8] == 'X':
+        print("Player X wins the game!")
+    #vertical
+    #diagonal
+
+#calling functions
 while True:
     drawBoard()
     place()
+    checkWin()
+
      
 
   
