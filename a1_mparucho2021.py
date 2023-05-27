@@ -34,21 +34,31 @@ def place():
 
 #this function will be in charge of checking if any player win
 def checkWin():
-    #horizontal
-    if board[0] == 'X' and board[1] == 'X' and board[2] == 'X':
-        print("Player X wins the game!")
-    if board[3] == 'X' and board[4] == 'X' and board[5] == 'X':
-        print("Player X wins the game!")
-    if board[6] == 'X' and board[7] == 'X' and board[8] == 'X':
-        print("Player X wins the game!")
-    #vertical
-    #diagonal
+    #crearing a list to check for win in a more efficiente way
+    combinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # horizontal
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # vertical
+        [0, 4, 8], [2, 4, 6]              # diagonal
+    ]
+
+    for i in combinations:
+        if all(board[pos] == 'X' for pos in i):
+            print("Player X wins the game!")
+            return True
+        if all(board[pos] == 'O' for pos in i):
+            print("Player O wins the game!")
+            return True
+    
+    
 
 #calling functions
 while True:
     drawBoard()
     place()
-    checkWin()
+    if checkWin():
+        break
+    
+
 
      
 
