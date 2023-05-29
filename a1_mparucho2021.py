@@ -16,21 +16,27 @@ def drawBoard():
 # This function places the 'X' or 'O' in the board
 def place():
     global currentPlayer #I forgot that we had to do this in Python, help from Stackoverflow, document link on report. 
-    choice = input("Enter choice: ")
-    choice = int(choice) 
-
-    if 1 <= choice <= 9:
-        if board[choice-1] != 'X' and board[choice-1] != 'O':
-            board[choice-1] = currentPlayer
-            #switching player from X to O
-            if currentPlayer == 'X':
-                currentPlayer = 'O'
+    
+    #Adding a while to this function to make sure that if the user enters a choice that is not a number the program will ask them to enter another input
+    while True:
+        choice = input("Enter choice: ")
+        if choice.isdigit():
+            choice = int(choice)
+            if 1 <= choice <= 9:
+                if board[choice-1] != 'X' and board[choice-1] != 'O':
+                    board[choice-1] = currentPlayer
+                    if currentPlayer == 'X':
+                        currentPlayer = 'O'
+                    else:
+                        currentPlayer = 'X'
+                    break
+                else:
+                    print("Error. Position is already filled.")
             else:
-                currentPlayer = 'X'    
+                print("Error. Pick a choice between 1 and 9!")
         else:
-            print("Error. Position is already filled.")
-    else:
-        print("Error. Pick a choice between 1 and 9!")
+            print("Error. Enter a valid numeric choice")
+
 
 #this function will be in charge of checking if any player win
 def checkWin():
@@ -48,7 +54,12 @@ def checkWin():
         if all(board[pos] == 'O' for pos in i):
             print("Player O wins the game!")
             return True
-    
+#I am making this function because I need to check if the game is tied, it is also an important part of the minmax algorithm #learnt about isinstance in a reddit post, link will be documented
+def checkDraw():
+    if all(isinstance(pos, str) for pos in board):
+        print("The game has ended in a tie...")
+        return True
+    return False
     
 
 #calling functions
@@ -56,6 +67,8 @@ while True:
     drawBoard()
     place()
     if checkWin():
+        break
+    if checkDraw():
         break
     
 
