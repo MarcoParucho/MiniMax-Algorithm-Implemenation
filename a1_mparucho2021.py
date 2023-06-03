@@ -60,7 +60,36 @@ def checkDraw():
         print("The game has ended in a tie...")
         return True
     return False
-    
+
+#this function is in charge of the MINMAX process
+def minimax(board, depth, maxPlayer):
+    if checkWin():
+        #returning -1, 0, 1 will allow the algorithm determine if the play is the correct choice to make
+        if currentPlayer == 'X':
+            return -1
+        else:
+            return 1
+    elif checkDraw():
+        return 0
+    #this is going to be the winner
+    if maxPlayer:
+        score = float('-inf')
+        for i in range(len(board)):
+            if isinstance(board[i], int):
+                board[i] = 'O' #places the O for the "AI"
+                x = minimax(board, depth + 1, False)
+                board[i]=i+1
+                score = max(x, score)
+        return score
+    else: #this is going to be the player
+        score = float('inf')
+        for i in range(len(board)):
+            if isinstance(board[i], int):
+                board[i]='X'
+                x = minimax(board, depth+1, True)
+                board[i] = i + 1
+                score = min(x, score)
+        return score
 
 #calling functions
 while True:
